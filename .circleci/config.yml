@@ -36,9 +36,6 @@ jobs:
       # Attach workspace with everything in it to run the tests
       - attach_workspace:
           at: ./
-      - run:
-          name: Add dev site config
-          command: chmod u+x ./deployment/generate-config.sh && ./deployment/generate-config.sh dev
       # run tests!
       - run: npm run build
       - persist_to_workspace:
@@ -62,7 +59,7 @@ jobs:
           command: aws s3 sync ./build/ s3://dev.yogalatest.dk --delete --acl public-read
       - run:
           name: Create CloudFront invalidation
-          command: aws cloudfront create-invalidation --distribution-id E1EWPKMAHKGW82 --paths "/*"
+          command: aws cloudfront create-invalidation --distribution-id E15IS6X1COBWWL --paths "/*"
   acceptanceTests:
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
@@ -120,7 +117,7 @@ jobs:
           command: aws s3 sync ./build/ s3://yogalates.dk --delete --acl public-read
       - run:
           name: Create CloudFront invalidation
-          command: aws cloudfront create-invalidation --distribution-id E381II3YU5LUGB --paths "/*"
+          command: aws cloudfront create-invalidation --distribution-id E15IS6X1COBWWL --paths "/*"
   acceptanceTests-prod:
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
