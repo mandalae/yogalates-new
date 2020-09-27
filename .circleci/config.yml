@@ -90,9 +90,6 @@ jobs:
         # Attach workspace with everything in it to run the tests
         - attach_workspace:
             at: ./
-        - run:
-            name: Add prod site config
-            command: chmod u+x ./deployment/generate-config.sh && ./deployment/generate-config.sh prod
         # run the build
         - run: npm run build
         - persist_to_workspace:
