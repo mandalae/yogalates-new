@@ -15,7 +15,7 @@ function Home() {
                 <div className="row">
                     <div className="col-md-4">
                         <div className="card mb-4 box-shadow">
-                            <img className="card-img-top" src="/images/yoga-1.jpg" alt="Yoga picture" />
+                            <img className="card-img-top" src="/images/yoga-1.jpg" alt="Yoga 1" />
                             <div className="card-body">
                             <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique augue. Donec sagittis dapibus est. Nunc ultricies aliquet ex ac molestie. Sed velit magna, consequat sit amet cursus eu, sollicitudin vestibulum ex.</p>
                             <div className="d-flex justify-content-between align-items-center">
@@ -29,7 +29,7 @@ function Home() {
                     </div>
                     <div className="col-md-4">
                         <div className="card mb-4 box-shadow">
-                            <img className="card-img-top" src="/images/yoga-3.jpg" alt="Yoga picture" />
+                            <img className="card-img-top" src="/images/yoga-3.jpg" alt="Yoga 3" />
                             <div className="card-body">
                             <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique augue. Donec sagittis dapibus est. Nunc ultricies aliquet ex ac molestie. Sed velit magna, consequat sit amet cursus eu, sollicitudin vestibulum ex.</p>
                             <div className="d-flex justify-content-between align-items-center">
@@ -43,7 +43,7 @@ function Home() {
                     </div>
                     <div className="col-md-4">
                         <div className="card mb-4 box-shadow">
-                            <img className="card-img-top" src="/images/yoga-2.jpg" alt="Yoga picture" />
+                            <img className="card-img-top" src="/images/yoga-2.jpg" alt="Yoga 2" />
                             <div className="card-body">
                             <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique augue. Donec sagittis dapibus est. Nunc ultricies aliquet ex ac molestie. Sed velit magna, consequat sit amet cursus eu, sollicitudin vestibulum ex.</p>
                             <div className="d-flex justify-content-between align-items-center">

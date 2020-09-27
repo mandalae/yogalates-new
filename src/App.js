@@ -26,7 +26,7 @@ function App() {
               <div className="col-sm-4 offset-md-1 py-4">
                 <h4 className="text-white">Kontakt</h4>
                 <ul className="list-unstyled">
-                  <li><a href="#" className="text-white"><i className="fa fa-facebook-square mr-2" />Yoga med June</a></li>
+                  <li><a href="https://www.facebook.com/groups/1023752511027539/" className="text-white"><i className="fa fa-facebook-square mr-2" />Yoga med June</a></li>
                   <li><a href="mailto:june@yogalates.dk" className="text-white"><i className="fa fa-envelope mr-2" />Email mig</a></li>
                 </ul>
               </div>
@@ -63,9 +63,6 @@ function App() {
 
       <footer className="text-muted">
         <div className="container">
-          <p className="float-right">
-            <a href="#">Back to top</a>
-          </p>
           <small>June Skaaning | Kondrupvej 3 | Enslev | 8983 Gjerlev | CVR nr. 20928271 | Tlf: 2673 2571  | Mail: <a href="mailto:june@yogalates.dk">june@yogalates.dk</a> | Facebook: Yoga med June</small>
         </div>
     </footer>
