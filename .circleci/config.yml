@@ -154,6 +154,7 @@ workflows:
           requires:
             - install
       - deploy:
+          context: AWS_API_KEYS
           requires:
             - test
       - acceptanceTests:
@@ -166,6 +167,7 @@ workflows:
             branches:
               only: master
       - deploy-prod:
+          context: AWS_API_KEYS
           requires:
             - build-prod
           filters:
