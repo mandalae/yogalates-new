@@ -1,25 +1,75 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {Switch, Route, NavLink, useLocation } from 'react-router-dom';
+import Home from './components/home/Home';
+import News from './components/news/News';
 
 function App() {
+  const [showInformation, setShowInformation] = useState(false);
+  const location = useLocation();
+
+  const toggleInformation = e => {
+    e.preventDefault();
+  
+    setShowInformation(!showInformation);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <div className={(showInformation ? 'visible ' : '') + 'show collapse bg-dark'} id="navbarHeader">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-8 col-md-7 py-4">
+                <h4 className="text-white">Om mig</h4>
+                <p className="text-muted">Jeg hedder June Skaaning og er fra 1961. Jeg er bosiddende nord for Randers i en lille landsby. I 2006 begyndte jeg mit nye liv, hvor jeg selv ville bestemme over min arbejdstid og det jeg havde lyst til. Det blev og er en dejlig rejse, med mange uddannelser og kurser indenfor bevægelse, se nærmere under uddannelser og kurser.</p>
+              </div>
+              <div className="col-sm-4 offset-md-1 py-4">
+                <h4 className="text-white">Kontakt</h4>
+                <ul className="list-unstyled">
+                  <li><a href="#" className="text-white"><i className="fa fa-facebook-square mr-2" />Yoga med June</a></li>
+                  <li><a href="mailto:june@yogalates.dk" className="text-white"><i className="fa fa-envelope mr-2" />Email mig</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="navbar navbar-dark bg-dark box-shadow">
+          <div className="container d-flex justify-content-between">
+            <a href="/" className="navbar-brand d-flex align-items-center">
+              <i className="fa fa-yoast mr-2" />
+              <strong>Yogalates</strong>
+            </a>
+            <ul className="navbar-nav mr-auto">
+              <li className={'nav-item' + (location.pathname.indexOf('nyheder') > -1 ? ' active' : '')}>
+                <NavLink to="/nyheder" className="nav-link">Nyheder</NavLink>
+              </li>
+            </ul>
+
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleInformation}>
+              <span className="navbar-toggler-icon" />
+            </button>
+          </div>
+        </div>
       </header>
-    </div>
+
+      <Switch>
+        <Route path="/nyheder">
+          <News />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+
+      <footer className="text-muted">
+        <div className="container">
+          <p className="float-right">
+            <a href="#">Back to top</a>
+          </p>
+          <small>June Skaaning | Kondrupvej 3 | Enslev | 8983 Gjerlev | CVR nr. 20928271 | Tlf: 2673 2571  | Mail: <a href="mailto:june@yogalates.dk">june@yogalates.dk</a> | Facebook: Yoga med June</small>
+        </div>
+    </footer>
+    </>
   );
 }
 

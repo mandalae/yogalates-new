@@ -1,0 +1,179 @@
+version: 2
+jobs:
+  install:
+    docker:
+      - image: circleci/node:10.0.0
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+     # Persist everything to make sure we can run the tests in a separate job
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+              - ./
+  test:
+    docker:
+    - image: circleci/node:10.0.0
+    working_directory: ~/repo
+
+    steps:
+      # Attach workspace with everything in it to run the tests
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Add dev site config
+          command: chmod u+x ./deployment/generate-config.sh && ./deployment/generate-config.sh dev
+      # run tests!
+      - run: npm run build
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+              - ./
+  deploy:
+    docker:
+      - image: circleci/python:2.7-jessie
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          # Install the aws cli - We've already set up the required keys
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          # Deploy everything from the current directory to an S3 bucket
+          name: Deploy to S3
+          command: aws s3 sync ./build/ s3://dev.yogalatest.dk --delete --acl public-read
+      - run:
+          name: Create CloudFront invalidation
+          command: aws cloudfront create-invalidation --distribution-id E1EWPKMAHKGW82 --paths "/*"
+  acceptanceTests:
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: mkdir test-reports
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
+      - run:
+          name: Bundle install
+          command: bundle install
+      - run:
+          name: Run acceptance tests
+          command: ruby acceptance/suite.rb
+  build-prod:
+    docker:
+      - image: circleci/node:10.0.0
+    working_directory: ~/repo
+
+    steps:
+        # Attach workspace with everything in it to run the tests
+        - attach_workspace:
+            at: ./
+        - run:
+            name: Add prod site config
+            command: chmod u+x ./deployment/generate-config.sh && ./deployment/generate-config.sh prod
+        # run the build
+        - run: npm run build
+        - persist_to_workspace:
+            root: ~/repo
+            paths:
+                - ./
+  deploy-prod:
+    docker:
+      - image: circleci/python:2.7-jessie
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: ls -la
+      - run:
+          # Install the aws cli - We've already set up the required keys
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          # Deploy everything from the current directory to an S3 bucket
+          name: Deploy to S3
+          command: aws s3 sync ./build/ s3://yogalates.dk --delete --acl public-read
+      - run:
+          name: Create CloudFront invalidation
+          command: aws cloudfront create-invalidation --distribution-id E381II3YU5LUGB --paths "/*"
+  acceptanceTests-prod:
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: mkdir test-reports
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
+      - run:
+          name: Bundle install
+          command: bundle install
+      - run:
+          name: Run acceptance tests
+          command: ruby acceptance/suite-prod.rb
+
+
+# Configure the workflows to only run the deployment on master
+workflows:
+  version: 2
+  install-deploy:
+    jobs:
+      - install
+      - test:
+          requires:
+            - install
+      - deploy:
+          requires:
+            - test
+      - acceptanceTests:
+          requires:
+            - deploy
+      - build-prod:
+          requires:
+            - acceptanceTests
+          filters:
+            branches:
+              only: master
+      - deploy-prod:
+          requires:
+            - build-prod
+          filters:
+            branches:
+              only: master
+      - acceptanceTests-prod:
+          requires:
+            - deploy-prod
+          filters:
+            branches:
+              only: master
