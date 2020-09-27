@@ -2,7 +2,7 @@ version: 2
 jobs:
   install:
     docker:
-      - image: circleci/node:10.0.0
+      - image: circleci/node
     working_directory: ~/repo
 
     steps:
@@ -29,7 +29,7 @@ jobs:
               - ./
   test:
     docker:
-    - image: circleci/node:10.0.0
+    - image: circleci/node
     working_directory: ~/repo
 
     steps:
@@ -44,7 +44,7 @@ jobs:
               - ./
   deploy:
     docker:
-      - image: circleci/python:2.7-jessie
+      - image: circleci/python
     working_directory: ~/repo
     steps:
       - attach_workspace:
@@ -83,7 +83,7 @@ jobs:
           command: ruby acceptance/suite.rb
   build-prod:
     docker:
-      - image: circleci/node:10.0.0
+      - image: circleci/node
     working_directory: ~/repo
 
     steps:
@@ -101,7 +101,7 @@ jobs:
                 - ./
   deploy-prod:
     docker:
-      - image: circleci/python:2.7-jessie
+      - image: circleci/python
     working_directory: ~/repo
     steps:
       - attach_workspace:
@@ -117,7 +117,7 @@ jobs:
           command: aws s3 sync ./build/ s3://yogalates.dk --delete --acl public-read
       - run:
           name: Create CloudFront invalidation
-          command: aws cloudfront create-invalidation --distribution-id E15IS6X1COBWWL --paths "/*"
+          command: aws cloudfront create-invalidation --distribution-id EKGHB89XIMFT8 --paths "/*"
   acceptanceTests-prod:
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
