@@ -1,0 +1,12 @@
+{
+    "region": "eu-west-1",
+    "userPool": "eu-west-1_JdyIGeWX3",
+    "userPoolBaseUri": "https://yogalates.auth.eu-west-1.amazoncognito.com",
+    "clientId": "7afp3usa78kv19eb97l4ficmph",
+    "callbackUri": "https://yogalates.dk/login",
+    "signoutUri": "https://yogalates.dk/logout",
+    "tokenScopes": ["openid", "email", "profile", "https://yogalates.dk/yogalates.admin"],
+    "appId": "6afc97da21ca4efd926ef000904ae0fe",
+    "identityPoolId": "eu-west-1:a0fb02c6-2cc7-45a9-a9b1-9afe90a6b1d4"
+  }
+  

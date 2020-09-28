@@ -1,16 +1,40 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Switch, Route, NavLink, useLocation } from 'react-router-dom';
+import cognitoUtils from './lib/cognitoUtils';
+import sessionUtils from './lib/session';
+import analytics from './lib/analytics';
+
 import Home from './components/home/Home';
 import News from './components/news/News';
+import Login from './components/login/Login';
 
 function App() {
   const [showInformation, setShowInformation] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    analytics.recordEvent('page load');
+  }, []);
+
   const toggleInformation = e => {
     e.preventDefault();
   
     setShowInformation(!showInformation);
+  };
+
+  const logout = () => {
+    analytics.recordEvent("logout");
+
+    sessionUtils.removeSession();
+    cognitoUtils.signOutCognitoSession();
+  };
+
+  const getLoginLogoutButton = () => {
+    if (sessionUtils.isLoggedIn()){
+      return <button className="btn btn-primary ml-2" onClick={logout()}>Log ud</button>;
+    } else {
+      return <button className="btn btn-primary ml-2" onClick={e => { e.preventDefault(); window.location.href=cognitoUtils.getCognitoSignInUri(); }}>Log ind</button>;
+    }
   };
 
   return (
@@ -48,6 +72,7 @@ function App() {
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleInformation}>
               <span className="navbar-toggler-icon" />
             </button>
+            {getLoginLogoutButton()}
           </div>
         </div>
       </header>
@@ -55,6 +80,9 @@ function App() {
       <Switch>
         <Route path="/nyheder">
           <News />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
         <Route path="/">
           <Home />
