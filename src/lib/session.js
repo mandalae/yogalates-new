@@ -16,6 +16,7 @@ const getSession = () => {
 }
 
 const setSession = session => {
+    console.log(session);
     sessionStorage.setItem('yogalates.session', JSON.stringify(session));
 }
 

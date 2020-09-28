@@ -12,7 +12,7 @@ function Login() {
           window.location = '/';
       }).catch(err => {
           console.log(err);
-        //   window.location = cognitoUtils.getCognitoSignInUri();
+          window.location = cognitoUtils.getCognitoSignInUri();
       });
     }, []);
 

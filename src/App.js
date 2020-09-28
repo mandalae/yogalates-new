@@ -31,7 +31,7 @@ function App() {
 
   const getLoginLogoutButton = () => {
     if (sessionUtils.isLoggedIn()){
-      return <button className="btn btn-primary ml-2" onClick={logout()}>Log ud</button>;
+      return <button className="btn btn-primary ml-2" onClick={logout}>Log ud</button>;
     } else {
       return <button className="btn btn-primary ml-2" onClick={e => { e.preventDefault(); window.location.href=cognitoUtils.getCognitoSignInUri(); }}>Log ind</button>;
     }

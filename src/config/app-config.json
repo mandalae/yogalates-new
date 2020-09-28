@@ -2,7 +2,7 @@
     "region": "eu-west-1",
     "userPool": "eu-west-1_JdyIGeWX3",
     "userPoolBaseUri": "https://yogalates.auth.eu-west-1.amazoncognito.com",
-    "clientId": "7afp3usa78kv19eb97l4ficmph",
+    "clientId": "4rkqdq3nprv71cnmbsgh35dubn",
     "callbackUri": "https://yogalates.dk/login",
     "signoutUri": "https://yogalates.dk/logout",
     "tokenScopes": ["openid", "email", "profile", "https://yogalates.dk/yogalates.admin"],
