@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Home() {
     return (
@@ -17,13 +18,11 @@ function Home() {
                         <div className="card mb-4 box-shadow">
                             <img className="card-img-top" src="/images/yoga-1.jpg" alt="Yoga 1" />
                             <div className="card-body">
-                            <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique augue. Donec sagittis dapibus est. Nunc ultricies aliquet ex ac molestie. Sed velit magna, consequat sit amet cursus eu, sollicitudin vestibulum ex.</p>
-                            <div className="d-flex justify-content-between align-items-center">
-                                <div className="btn-group">
-                                <button type="button" className="btn btn-sm btn-outline-primary">Åben</button>
+                                <p className="card-text">Lidt om mig</p>
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <Link to="/ommig" className="btn btn-sm btn-outline-secondary">Åbn</Link>
+                                    <small className="text-muted">9 mins</small>
                                 </div>
-                                <small className="text-muted">9 mins</small>
-                            </div>
                             </div>
                         </div>
                     </div>
@@ -31,11 +30,9 @@ function Home() {
                         <div className="card mb-4 box-shadow">
                             <img className="card-img-top" src="/images/yoga-3.jpg" alt="Yoga 3" />
                             <div className="card-body">
-                            <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique augue. Donec sagittis dapibus est. Nunc ultricies aliquet ex ac molestie. Sed velit magna, consequat sit amet cursus eu, sollicitudin vestibulum ex.</p>
+                            <p className="card-text">Kurser</p>
                             <div className="d-flex justify-content-between align-items-center">
-                                <div className="btn-group">
-                                <button type="button" className="btn btn-sm btn-outline-primary">Åben</button>
-                                </div>
+                                <Link to="/kurser" className="btn btn-sm btn-outline-secondary">Åbn</Link>
                                 <small className="text-muted">9 mins</small>
                             </div>
                             </div>
@@ -45,11 +42,9 @@ function Home() {
                         <div className="card mb-4 box-shadow">
                             <img className="card-img-top" src="/images/yoga-2.jpg" alt="Yoga 2" />
                             <div className="card-body">
-                            <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique augue. Donec sagittis dapibus est. Nunc ultricies aliquet ex ac molestie. Sed velit magna, consequat sit amet cursus eu, sollicitudin vestibulum ex.</p>
+                            <p className="card-text">Uddannelser</p>
                             <div className="d-flex justify-content-between align-items-center">
-                                <div className="btn-group">
-                                <button type="button" className="btn btn-sm btn-outline-primary">Åben</button>
-                                </div>
+                                <button type="button" className="btn btn-sm btn-outline-secondary">Åbn</button>
                                 <small className="text-muted">9 mins</small>
                             </div>
                             </div>
