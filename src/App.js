@@ -88,6 +88,11 @@ function App() {
               <i className="fa fa-yoast mr-2" />
               <strong>Yogalates</strong>
             </a>
+            <ul className="navbar-nav d-flex">
+              <li className={'nav-item flex-fill' + (location.pathname.indexOf('ommig') > -1 ? ' active' : '')}>
+                <NavLink to="/ommig" className="nav-link">Om mig</NavLink>
+              </li>
+            </ul>
 
             <button className="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleInformation}>
               <i className={'fa ' + (showInformation ? 'fa-chevron-up' : 'fa-chevron-down')} />
