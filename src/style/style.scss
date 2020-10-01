@@ -31,3 +31,11 @@ code {
     background-size: contain;
     height: 30rem;
 }
+
+.list-group-item {
+    &.active {
+        a {
+            color: #FCFCFC;
+        }
+    }
+}

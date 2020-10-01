@@ -23,7 +23,7 @@ function App() {
 
   const toggleInformation = e => {
     e.preventDefault();
-  
+
     setShowInformation(!showInformation);
   };
 
@@ -115,7 +115,7 @@ function App() {
         <Route path="/kurser">
           <Courses />
         </Route>
-        <Route path="/admin/home">
+        <Route path="/admin">
           <AdminHome />
         </Route>
         <Route path="/">
