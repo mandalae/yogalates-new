@@ -110,8 +110,8 @@ function App() {
               <strong>Yogalates</strong>
             </a>
             <NavDropdown title="Artikler" id="basic-nav-dropdown">
-              {pages.map(page => {
-                  return <NavDropdown.Item href={'/artikel/' + page.name}>{page.headline}</NavDropdown.Item>
+              {pages.filter(item => item.type === 'article').map((page, index) => {
+                  return <NavDropdown.Item key={'article-' + index} href={'/artikel/' + page.name}>{page.headline}</NavDropdown.Item>
               })}
             </NavDropdown>
             <ul className="navbar-nav d-flex">
