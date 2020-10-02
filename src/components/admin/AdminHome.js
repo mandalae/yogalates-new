@@ -18,7 +18,7 @@ function AdminHome({showToast}) {
     const updatePageList = page => {
         const newPages = [];
         let found = false;
-        pages.map(item => {
+        pages.forEach(item => {
             if (page.name === item.name){
                 found = true;
                 newPages.push(page);

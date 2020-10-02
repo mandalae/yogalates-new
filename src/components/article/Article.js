@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Redirect, useParams } from "react-router-dom";
-import sessionUtils from '../../lib/session';
+import { useParams } from "react-router-dom";
 import PageService from '../../services/PageService';
 
 import Markdown from 'react-markdown';
