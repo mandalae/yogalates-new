@@ -15,6 +15,23 @@ function AdminHome({showToast}) {
         });
     }, []);
 
+    const updatePageList = page => {
+        const newPages = [];
+        let found = false;
+        pages.map(item => {
+            if (page.name === item.name){
+                found = true;
+                newPages.push(page);
+            } else {
+                newPages.push(item);
+            }
+        });
+        if (!found) {
+            newPages.push(page);
+        }
+        setPages(newPages);
+    };
+
     if (!sessionUtils.isLoggedIn()) {
         return <Redirect to="/" />;
     } else {
@@ -47,10 +64,10 @@ function AdminHome({showToast}) {
                         </section>
                     </Route>
                     <Route path="/admin/pages/create">
-                        <AdminPages showToast={showToast} />
+                        <AdminPages showToast={showToast} updatePageList={updatePageList} />
                     </Route>
                     <Route path="/admin/pages/edit/:pageName">
-                        <AdminPages showToast={showToast} />
+                        <AdminPages showToast={showToast} updatePageList={updatePageList} />
                     </Route>
                 </main>
             </div>

@@ -4,25 +4,34 @@ import cognitoUtils from './lib/cognitoUtils';
 import sessionUtils from './lib/session';
 import analytics from './lib/analytics';
 import Dropdown from "react-bootstrap/Dropdown";
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import { useToasts } from 'react-toast-notifications';
+
+import PageService from './services/PageService';
 
 import Home from './components/home/Home';
 import News from './components/news/News';
 import Login from './components/login/Login';
 import About from './components/about/About';
 import Courses from './components/courses/Courses';
+import Article from './components/article/Article';
 
 import AdminHome from './components/admin/AdminHome';
 
 function App() {
   const [showInformation, setShowInformation] = useState(false);
+  const [pages, setPages] = useState([]);
   const location = useLocation();
 
   const { addToast } = useToasts();
 
   useEffect(() => {
     analytics.recordEvent('page load');
+
+    PageService.getAllPages().then(pages => {
+        setPages(pages);
+    });
   }, []);
 
   const toggleInformation = e => {
@@ -100,6 +109,11 @@ function App() {
               <i className="fa fa-yoast mr-2" />
               <strong>Yogalates</strong>
             </a>
+            <NavDropdown title="Artikler" id="basic-nav-dropdown">
+              {pages.map(page => {
+                  return <NavDropdown.Item href={'/artikel/' + page.name}>{page.headline}</NavDropdown.Item>
+              })}
+            </NavDropdown>
             <ul className="navbar-nav d-flex">
               <li className={'nav-item flex-fill' + (location.pathname.indexOf('ommig') > -1 ? ' active' : '')}>
                 <NavLink to="/ommig" className="nav-link">Om mig</NavLink>
@@ -126,6 +140,9 @@ function App() {
         </Route>
         <Route path="/kurser">
           <Courses />
+        </Route>
+        <Route path="/artikel/:pageName">
+          <Article />
         </Route>
         <Route path="/admin">
           <AdminHome showToast={showToast} />

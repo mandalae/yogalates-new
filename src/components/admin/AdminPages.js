@@ -11,7 +11,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 // Initialize a markdown parser
 const mdParser = new MarkdownIt();
 
-function AdminPages({showToast}) {
+function AdminPages({showToast, updatePageList}) {
     const [name, setName] = useState('');
     const [headline, setHeadline] = useState('');
     const [content, setContent] = useState('');
@@ -34,7 +34,9 @@ function AdminPages({showToast}) {
 
     const handlePageHeadlineChange = e => {
         setHeadline(e.target.value);
-        setName(encodeURIComponent(e.target.value.replaceAll(' ', '-')));
+        if (!name){
+            setName(encodeURIComponent(e.target.value.replaceAll(' ', '-')));
+        }
     };
 
     const savePage = async e => {
@@ -47,6 +49,7 @@ function AdminPages({showToast}) {
         const result = await PageService.savePage(page);
         if (result.success) {
             showToast('success', 'Siden er blevet gemt');
+            updatePageList(page);
         }
     };
 
