@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'react-markdown';
 
 import PageService from '../../services/PageService';
 
@@ -27,7 +27,7 @@ function About() {
           <div className="about-picture col-4">&nbsp;</div>
           <div className="col-8 p-4 ml-4 bg-light rounded">
             <h2>{headline}</h2>
-            <ReactMarkdown source={content} />
+            <Markdown source={content} />
           </div>
       </section>
     </main>

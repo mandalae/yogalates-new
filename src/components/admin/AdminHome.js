@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { Redirect, Switch, Route, Link, useLocation } from "react-router-dom";
+import { Redirect, Route, Link, useLocation } from "react-router-dom";
 import sessionUtils from '../../lib/session';
 import PageService from '../../services/PageService';
 
 import AdminPages from './AdminPages';
 
-function AdminHome() {
+function AdminHome({showToast}) {
     const [pages, setPages] = useState([]);
     const location = useLocation();
 
@@ -26,11 +26,11 @@ function AdminHome() {
                             <Link to="/admin/home">Admin</Link>
                         </li>
                         <li className="list-group-item">
-                            <Link to="/admin/pages">Sider</Link>
+                            <Link to="/admin/pages/create">Sider</Link>
                             <ul className="list-group">
-                                {pages.map(page => {
-                                    return (<li className="list-group-item border-0">
-                                                <Link to={'/admin/pages/' + page.name}>{page.headline}</Link>
+                                {pages.map((page, index) => {
+                                    return (<li key={index} className="list-group-item border-0">
+                                                <Link to={'/admin/pages/edit/' + page.name}>{page.headline}</Link>
                                             </li>);
                                 })}
                             </ul>
@@ -38,19 +38,20 @@ function AdminHome() {
                     </ul>
                 </nav>
                 <main className="admin-home w-75">
-                    <Switch>
-                        <Route path="/admin/home">
-                            <section className="jumbotron">
-                                <div className="container">
-                                    <h1 className="jumbotron-heading">Admin</h1>
-                                    <p className="lead text-muted">Her kan du rette tekster og tilføje ting</p>
-                                </div>
-                            </section>
-                        </Route>
-                        <Route path="/admin/pages/:pageName">
-                            <AdminPages />
-                        </Route>
-                    </Switch>
+                    <Route path="/admin/home">
+                        <section className="jumbotron">
+                            <div className="container">
+                                <h1 className="jumbotron-heading">Admin</h1>
+                                <p className="lead text-muted">Her kan du rette tekster og tilføje ting</p>
+                            </div>
+                        </section>
+                    </Route>
+                    <Route path="/admin/pages/create">
+                        <AdminPages showToast={showToast} />
+                    </Route>
+                    <Route path="/admin/pages/edit/:pageName">
+                        <AdminPages showToast={showToast} />
+                    </Route>
                 </main>
             </div>
         );

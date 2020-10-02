@@ -11,31 +11,43 @@ import 'react-markdown-editor-lite/lib/index.css';
 // Initialize a markdown parser
 const mdParser = new MarkdownIt();
 
-function AdminPages() {
-    const [page, setPage] = useState({});
+function AdminPages({showToast}) {
+    const [name, setName] = useState('');
+    const [headline, setHeadline] = useState('');
+    const [content, setContent] = useState('');
+
     const {pageName} = useParams();
 
     useEffect(() => {
         if (pageName) {
             PageService.getPage(pageName).then(page => {
-              setPage(page);
+              setName(page.name);
+              setHeadline(page.headline);
+              setContent(page.content);
             });
         }
     }, [pageName]);
 
     const handleEditorChange = content => {
-        const newPage = {
-            name: page.name,
-            headline: page.headline,
-            content: content.text
-        };
-        setPage(newPage);
+        setContent(content.text);
     };
 
-    const savePage = e => {
+    const handlePageHeadlineChange = e => {
+        setHeadline(e.target.value);
+        setName(encodeURIComponent(e.target.value.replaceAll(' ', '-')));
+    };
+
+    const savePage = async e => {
         e.preventDefault();
-        
-        PageService.savePage(page);
+        const page = {
+            name: name,
+            headline: headline,
+            content: content
+        }
+        const result = await PageService.savePage(page);
+        if (result.success) {
+            showToast('success', 'Siden er blevet gemt');
+        }
     };
 
     if (!sessionUtils.isLoggedIn()) {
@@ -44,22 +56,22 @@ function AdminPages() {
         return (
             <section className="jumbotron">
                 <div className="container">
-                    <h1 className="jumbotron-heading">Retter side: {page.headline}</h1>
-                    <form>
+                    <h1 className="jumbotron-heading">{headline ? 'Retter side: ' + headline : 'Opret ny side'}</h1>
+                    <form onSubmit={savePage}>
                         <div className="form-group">
                             <label htmlFor="headline">Overskrift</label>
-                            <input type="text" value={page.headline} className="form-control" id="headline" placeholder="Skriv overskrift" autoFocus />
+                            <input type="text" value={headline} onChange={handlePageHeadlineChange} className="form-control" id="headline" placeholder="Skriv overskrift" autoFocus />
                         </div>
                         <div className="form-group">
                             <label htmlFor="content">Tekst</label>
                             <MdEditor
-                              value={page.content}
+                              value={content}
                               style={{ height: "500px" }}
                               renderHTML={(text) => mdParser.render(text)}
                               onChange={handleEditorChange}
                               />
                         </div>
-                        <button type="submit" className="btn btn-primary" onClick={savePage}>Opdater</button>
+                        <button type="submit" className="btn btn-primary" onClick={savePage}>Gem</button>
                     </form>
                 </div>
             </section>

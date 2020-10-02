@@ -5,6 +5,8 @@ import sessionUtils from './lib/session';
 import analytics from './lib/analytics';
 import Dropdown from "react-bootstrap/Dropdown";
 
+import { useToasts } from 'react-toast-notifications';
+
 import Home from './components/home/Home';
 import News from './components/news/News';
 import Login from './components/login/Login';
@@ -16,6 +18,8 @@ import AdminHome from './components/admin/AdminHome';
 function App() {
   const [showInformation, setShowInformation] = useState(false);
   const location = useLocation();
+
+  const { addToast } = useToasts();
 
   useEffect(() => {
     analytics.recordEvent('page load');
@@ -33,6 +37,13 @@ function App() {
     sessionUtils.removeSession();
     cognitoUtils.signOutCognitoSession();
   };
+
+  const showToast = (type, content) => {
+      addToast(content, {
+          appearance: type,
+          autoDismiss: true
+      });
+  }
 
   const getLoginLogoutButton = () => {
     if (sessionUtils.isLoggedIn()){
@@ -64,6 +75,7 @@ function App() {
 
   return (
     <>
+
       <header>
         <div className={(showInformation ? 'visible ' : '') + 'show collapse bg-dark'} id="navbarHeader">
           <div className="container">
@@ -116,7 +128,7 @@ function App() {
           <Courses />
         </Route>
         <Route path="/admin">
-          <AdminHome />
+          <AdminHome showToast={showToast} />
         </Route>
         <Route path="/">
           <Home />
