@@ -35,7 +35,7 @@ function AdminPages({showToast, updatePageList}) {
     const handlePageHeadlineChange = e => {
         setHeadline(e.target.value);
         if (!name){
-            setName(encodeURIComponent(e.target.value.replaceAll(' ', '-')));
+            setName(encodeURIComponent(e.target.value.toLowerCase().replaceAll(' ', '-')));
         }
     };
 
@@ -52,6 +52,23 @@ function AdminPages({showToast, updatePageList}) {
             updatePageList(page);
         }
     };
+
+    const handleImageUpload = file => {
+        return new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = data => {
+            // resolve(data.target.result);
+            // console.log(data.target.result);
+          };
+          reader.onloadstart = data => {
+            console.log(data.target);
+          };
+          reader.onprogress = data => {
+            console.log(data.target);
+          };
+          reader.readAsDataURL(file);
+        });
+      };
 
     if (!sessionUtils.isLoggedIn()) {
         return <Redirect to="/" />;
@@ -72,6 +89,7 @@ function AdminPages({showToast, updatePageList}) {
                               style={{ height: "500px" }}
                               renderHTML={(text) => mdParser.render(text)}
                               onChange={handleEditorChange}
+                              onImageUpload={handleImageUpload}
                               />
                         </div>
                         <button type="submit" className="btn btn-primary" onClick={savePage}>Gem</button>

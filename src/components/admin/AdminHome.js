@@ -4,6 +4,7 @@ import sessionUtils from '../../lib/session';
 import PageService from '../../services/PageService';
 
 import AdminPages from './AdminPages';
+import AdminClasses from './AdminClasses';
 
 function AdminHome({showToast}) {
     const [pages, setPages] = useState([]);
@@ -42,6 +43,9 @@ function AdminHome({showToast}) {
                         <li className={'list-group-item' + (location.pathname === '/admin/home' ? ' active' : '')}>
                             <Link to="/admin/home">Admin</Link>
                         </li>
+                        <li className={'list-group-item' + (location.pathname === '/admin/classes' ? ' active' : '')}>
+                            <Link to="/admin/classes">Hold</Link>
+                        </li>
                         <li className="list-group-item">
                             <Link to="/admin/pages/create">Sider</Link>
                             <ul className="list-group">
@@ -62,6 +66,9 @@ function AdminHome({showToast}) {
                                 <p className="lead text-muted">Her kan du rette tekster og tilføje ting</p>
                             </div>
                         </section>
+                    </Route>
+                    <Route path="/admin/classes">
+                        <AdminClasses showToast={showToast} />
                     </Route>
                     <Route path="/admin/pages/create">
                         <AdminPages showToast={showToast} updatePageList={updatePageList} />

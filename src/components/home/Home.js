@@ -30,11 +30,11 @@ function Home() {
                         <div className="card mb-4 box-shadow">
                             <img className="card-img-top" src="/images/yoga-3.jpg" alt="Yoga 3" />
                             <div className="card-body">
-                            <p className="card-text">Kurser</p>
-                            <div className="d-flex justify-content-between align-items-center">
-                                <Link to="/kurser" className="btn btn-sm btn-outline-secondary">Åbn</Link>
-                                <small className="text-muted">9 mins</small>
-                            </div>
+                                <h2>Hold</h2>
+                                <p className="card-text">Her kan du finde de hold jeg underviser i.</p>
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <Link to="/hold" className="btn btn-sm btn-outline-secondary">Åbn</Link>
+                                </div>
                             </div>
                         </div>
                     </div>

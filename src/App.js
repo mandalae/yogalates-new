@@ -16,6 +16,7 @@ import Login from './components/login/Login';
 import About from './components/about/About';
 import Courses from './components/courses/Courses';
 import Article from './components/article/Article';
+import Classes from './components/classes/Classes';
 
 import AdminHome from './components/admin/AdminHome';
 
@@ -114,11 +115,8 @@ function App() {
                   return <NavDropdown.Item key={'article-' + index} href={'/artikel/' + page.name}>{page.headline}</NavDropdown.Item>
               })}
             </NavDropdown>
-            <ul className="navbar-nav d-flex">
-              <li className={'nav-item flex-fill' + (location.pathname.indexOf('ommig') > -1 ? ' active' : '')}>
-                <NavLink to="/ommig" className="nav-link">Om mig</NavLink>
-              </li>
-            </ul>
+            <NavLink to="/hold" className={'nav-link' + (location.pathname.indexOf('hold') > -1 ? ' active' : '')}>Hold</NavLink>
+            <NavLink to="/ommig" className={'nav-link' + (location.pathname.indexOf('ommig') > -1 ? ' active' : '')}>Om mig</NavLink>
 
             <button className="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleInformation}>
               <i className={'fa ' + (showInformation ? 'fa-chevron-up' : 'fa-chevron-down')} />
@@ -141,6 +139,9 @@ function App() {
         <Route path="/kurser">
           <Courses />
         </Route>
+        <Route path="/hold">
+          <Classes />
+        </Route>
         <Route path="/artikel/:pageName">
           <Article />
         </Route>
@@ -154,7 +155,7 @@ function App() {
 
       <footer className="text-muted mt-4">
         <div className="container">
-          <small>June Skaaning | Kondrupvej 3 | Enslev | 8983 Gjerlev | CVR nr. 20928271 | Tlf: 2673 2571  | Mail: <a href="mailto:june@yogalates.dk">june@yogalates.dk</a> | Facebook: Yoga med June</small>
+          <small>June Skaaning | Kondrupvej 3 | Enslev | 8983 Gjerlev | CVR nr. 20928271 | Tlf: 2673 2571  | Mail: <a href="mailto:june@yogalates.dk" className="text-dark"><i className="fa fa-envelope mr-1" />june@yogalates.dk</a> | Facebook: <a href="https://www.facebook.com/groups/1023752511027539/" className="text-dark"><i className="fa fa-facebook-square mr-1" />Yoga med June</a></small>
         </div>
     </footer>
     </>
