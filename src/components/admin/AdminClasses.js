@@ -48,7 +48,7 @@ function AdminClasses({showToast, updatePageList}) {
         e.preventDefault();
 
         if (!currentClass.slug) {
-            currentClass.slug = encodeURIComponent((currentClass.name + ' ' + currentClass.address1).toLowerCase().replaceAll(' ', '-'));
+            currentClass.slug = encodeURIComponent((currentClass.name + ' ' + currentClass.address1).toLowerCase().replace(/\s/gi, '-'));
         }
 
         const result = await ClassService.saveClass(currentClass);
