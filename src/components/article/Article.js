@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useParams } from "react-router-dom";
 import PageService from '../../services/PageService';
 
-import Markdown from 'react-markdown';
+import Markdown from '../../utils/ReactMarkdownIt';
 
 function Article() {
     const [page, setPage] = useState({});

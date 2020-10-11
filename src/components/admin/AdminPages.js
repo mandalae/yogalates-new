@@ -2,14 +2,21 @@ import React, {useState, useEffect} from 'react';
 import { Redirect, useParams } from "react-router-dom";
 import sessionUtils from '../../lib/session';
 import PageService from '../../services/PageService';
+import ImageService from '../../services/ImageService';
 
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
 
+// Plugins for md editor
+import CenterText from 'markdown-it-center-text';
+import MarkdownEditorCenterPlugin from '../../utils/MarkdownEditorCenterPlugin';
+
+MdEditor.use(MarkdownEditorCenterPlugin);
+
 // Initialize a markdown parser
-const mdParser = new MarkdownIt();
+const mdParser = new MarkdownIt().use(CenterText);
 
 function AdminPages({showToast, updatePageList}) {
     const [name, setName] = useState('');
@@ -44,7 +51,8 @@ function AdminPages({showToast, updatePageList}) {
         const page = {
             name: name,
             headline: headline,
-            content: content
+            content: content,
+            type: 'article'
         }
         const result = await PageService.savePage(page);
         if (result.success) {
@@ -53,21 +61,9 @@ function AdminPages({showToast, updatePageList}) {
         }
     };
 
-    const handleImageUpload = file => {
-        return new Promise(resolve => {
-          const reader = new FileReader();
-          reader.onload = data => {
-            // resolve(data.target.result);
-            // console.log(data.target.result);
-          };
-          reader.onloadstart = data => {
-            console.log(data.target);
-          };
-          reader.onprogress = data => {
-            console.log(data.target);
-          };
-          reader.readAsDataURL(file);
-        });
+    const handleImageUpload = async file => {
+        await ImageService.uploadImage(file);
+        return Promise.resolve(`https://cdn.yogalates.dk/${file.name}`);
       };
 
     if (!sessionUtils.isLoggedIn()) {
