@@ -6,11 +6,7 @@ const MarkdownEditorCenterPlugin = (props) => {
   };
 
   return (
-    <span
-      className="button button-type-counter"
-      title="Center"
-      onClick={handleClick}
-    >
+    <span className="button button-type-counter" title="Center" onClick={handleClick}>
       <i class="fa fa-align-center" />
     </span>
   );
