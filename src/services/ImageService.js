@@ -11,7 +11,7 @@ const ImageService = {
             })
             .then((res) => res.json())
             .then(result => result)
-            .catch(console.log);
+            .catch(console.error);
     },
     uploadImage: async (file) => {
         const imagePutURL = await ImageService.getImagePutURL(file.name, file.type);

@@ -1,14 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { Redirect } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import sessionUtils from '../../lib/session';
 import ClassService from '../../services/ClassService';
+import ImageService from '../../services/ImageService';
 
 function AdminClasses({showToast, updatePageList}) {
     const [classes, setClasses] = useState([]);
     const [currentClass, setCurrentClass] = useState({});
     const [showModal, setShowModal] = useState(false);
+    const [file, setFile] = useState(null);
+    const [saving, setSaving] = useState(false);
+    const fileUploadRef = useRef(null);
 
     useEffect(() => {
         ClassService.getAllClasses().then(classes => {
@@ -21,6 +25,14 @@ function AdminClasses({showToast, updatePageList}) {
             setCurrentClass({});
         }
     }, [showModal]);
+
+    useEffect(() => {
+        if (file) {
+            const newCurrentClass = {...currentClass};
+            newCurrentClass.imageUrl = `https://cdn.yogalates.dk/${file.name}`;
+            setCurrentClass(newCurrentClass);
+        }
+    }, [file]);
 
     const editClass = slug => {
         setCurrentClass(classes.filter(item => item.slug === slug)[0]);
@@ -50,6 +62,10 @@ function AdminClasses({showToast, updatePageList}) {
         setCurrentClass(newClass);
     };
 
+    const browseFiles = e => {
+        fileUploadRef.current.click();
+    };
+
     const saveClass = async e => {
         e.preventDefault();
 
@@ -57,6 +73,11 @@ function AdminClasses({showToast, updatePageList}) {
             currentClass.slug = encodeURIComponent((currentClass.name + ' ' + currentClass.address1).toLowerCase().replace(/\s/gi, '-'));
         }
 
+        if (file) {
+            await ImageService.uploadImage(file);
+            currentClass.imageUrl = `https://cdn.yogalates.dk/${file.name}`;
+        }
+        setSaving(true);
         const result = await ClassService.saveClass(currentClass);
         if (result && result.success) {
             const newClasses = [...classes.filter(item => item.slug !== currentClass.slug)];
@@ -68,6 +89,7 @@ function AdminClasses({showToast, updatePageList}) {
         } else {
             showToast('error', 'Der skete en fejl, prøv igen.');
         }
+        setSaving(false);
     };
 
     if (!sessionUtils.isLoggedIn()) {
@@ -99,7 +121,7 @@ function AdminClasses({showToast, updatePageList}) {
                                       <td>{clazz.time}</td>
                                       <td>{clazz.text}</td>
                                       <td>{clazz.link}</td>
-                                      <td>
+                                      <td className="text-nowrap">
                                         <button onClick={() => { editClass(clazz.slug); }} className="btn btn-secondary btn-sm mr-2">Rediger</button>
                                         <button onClick={() => { deleteClass(clazz.slug); }} className="btn btn-secondary btn-sm">Slet</button>
                                       </td>
@@ -122,36 +144,41 @@ function AdminClasses({showToast, updatePageList}) {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="time">Tid</label>
-                                <input type="text" value={currentClass.time} onChange={handleChange} className="form-control" id="time" placeholder="Eksempel: Mandag kl. 9.30 - 10.30" autoFocus />
+                                <input type="text" value={currentClass.time} onChange={handleChange} className="form-control" id="time" placeholder="Eksempel: Mandag kl. 9.30 - 10.30" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="text">Extra tekst</label>
-                                <input type="text" value={currentClass.text} onChange={handleChange} className="form-control" id="text" placeholder="Eksempel: Start uge 33" autoFocus />
+                                <input type="text" value={currentClass.text} onChange={handleChange} className="form-control" id="text" placeholder="Eksempel: Start uge 33" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="address1">Sted navn</label>
-                                <input type="text" value={currentClass.address1} onChange={handleChange} className="form-control" id="address1" placeholder="Eksempel: Water & Wellness" autoFocus />
+                                <input type="text" value={currentClass.address1} onChange={handleChange} className="form-control" id="address1" placeholder="Eksempel: Water & Wellness" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="address2">Adresse</label>
-                                <input type="text" value={currentClass.address2} onChange={handleChange} className="form-control" id="address2" placeholder="Eksempel: Viborgvej 80" autoFocus />
+                                <input type="text" value={currentClass.address2} onChange={handleChange} className="form-control" id="address2" placeholder="Eksempel: Viborgvej 80" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="postCode">Post nr</label>
-                                <input type="number" value={currentClass.postCode} onChange={handleChange} className="form-control" id="postCode" placeholder="Eksempel: 8920" autoFocus />
+                                <input type="number" value={currentClass.postCode} onChange={handleChange} className="form-control" id="postCode" placeholder="Eksempel: 8920" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="city">By</label>
-                                <input type="text" value={currentClass.city} onChange={handleChange} className="form-control" id="city" placeholder="Eksempel: Randers" autoFocus />
+                                <input type="text" value={currentClass.city} onChange={handleChange} className="form-control" id="city" placeholder="Eksempel: Randers" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="link">Link</label>
-                                <input type="text" value={currentClass.link} onChange={handleChange} className="form-control" id="link" placeholder="Eksempel: www.waterandwellness.dk" autoFocus />
+                                <input type="text" value={currentClass.link} onChange={handleChange} className="form-control" id="link" placeholder="Eksempel: www.waterandwellness.dk" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="image">Billede</label>
+                                <input type="text" value={currentClass.imageUrl} onClick={browseFiles} className="form-control" id="image" />
+                                <input type="file" ref={fileUploadRef} onChange={e => { setFile(e.target.files[0]) }} className="form-control d-none" id="imageFileUpload" />
                             </div>
                         </form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary" onClick={saveClass}>Gem</Button>
+                        <Button variant="primary" onClick={saveClass} disabled={saving}>{saving ? <i class="fa fa-spinner fa-spin" /> : 'Gem'}</Button>
                         <Button variant="secondary" onClick={() => { setShowModal(false); }}>Luk</Button>
                     </Modal.Footer>
                 </Modal>
