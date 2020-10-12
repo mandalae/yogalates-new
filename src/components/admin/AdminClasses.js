@@ -16,6 +16,12 @@ function AdminClasses({showToast, updatePageList}) {
         });
     }, []);
 
+    useEffect(() => {
+        if (!showModal) {
+            setCurrentClass({});
+        }
+    }, [showModal]);
+
     const editClass = slug => {
         setCurrentClass(classes.filter(item => item.slug === slug)[0]);
 
@@ -62,7 +68,6 @@ function AdminClasses({showToast, updatePageList}) {
         } else {
             showToast('error', 'Der skete en fejl, prøv igen.');
         }
-        setCurrentClass({});
     };
 
     if (!sessionUtils.isLoggedIn()) {
