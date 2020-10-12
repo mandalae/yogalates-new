@@ -27,12 +27,12 @@ function AdminClasses({showToast, updatePageList}) {
     }, [showModal]);
 
     useEffect(() => {
-        if (file) {
+        if (file && currentClass.imageUrl !== `https://cdn.yogalates.dk/${file.name}`) {
             const newCurrentClass = {...currentClass};
             newCurrentClass.imageUrl = `https://cdn.yogalates.dk/${file.name}`;
             setCurrentClass(newCurrentClass);
         }
-    }, [file]);
+    }, [file, currentClass]);
 
     const editClass = slug => {
         setCurrentClass(classes.filter(item => item.slug === slug)[0]);
@@ -72,12 +72,13 @@ function AdminClasses({showToast, updatePageList}) {
         if (!currentClass.slug) {
             currentClass.slug = encodeURIComponent((currentClass.name + ' ' + currentClass.address1).toLowerCase().replace(/\s/gi, '-'));
         }
-
+        
+        setSaving(true);
         if (file) {
             await ImageService.uploadImage(file);
             currentClass.imageUrl = `https://cdn.yogalates.dk/${file.name}`;
         }
-        setSaving(true);
+
         const result = await ClassService.saveClass(currentClass);
         if (result && result.success) {
             const newClasses = [...classes.filter(item => item.slug !== currentClass.slug)];
