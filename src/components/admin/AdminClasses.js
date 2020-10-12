@@ -62,6 +62,7 @@ function AdminClasses({showToast, updatePageList}) {
         } else {
             showToast('error', 'Der skete en fejl, prøv igen.');
         }
+        setCurrentClass({});
     };
 
     if (!sessionUtils.isLoggedIn()) {
