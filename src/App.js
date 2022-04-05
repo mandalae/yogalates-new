@@ -92,7 +92,10 @@ function App() {
             <div className="row">
               <div className="col-sm-8 col-md-7 py-4">
                 <h4 className="text-white">Om mig</h4>
-                <p className="text-muted">Jeg hedder June Skaaning og er fra 1961. Jeg er bosiddende nord for Randers i en lille landsby. I 2006 begyndte jeg mit nye liv, hvor jeg selv ville bestemme over min arbejdstid og det jeg havde lyst til. Det blev og er en dejlig rejse, med mange uddannelser og kurser indenfor bevægelse, se nærmere under uddannelser og kurser.</p>
+                <div className="d-flex">
+                  <img src="/images/june.png" width="100" />
+                  <p className="text-muted">Jeg hedder June Skaaning og er fra 1961. Jeg er bosiddende nord for Randers i en lille landsby. I 2006 begyndte jeg mit nye liv, hvor jeg selv ville bestemme over min arbejdstid og det jeg havde lyst til. Det blev og er en dejlig rejse, med mange uddannelser og kurser indenfor bevægelse, se nærmere under uddannelser og kurser.</p>
+                </div>
               </div>
               <div className="col-sm-4 offset-md-1 py-4">
                 <h4 className="text-white">Kontakt</h4>

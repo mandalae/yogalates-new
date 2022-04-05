@@ -7,7 +7,7 @@ function Home() {
         <section className="jumbotron text-center">
           <div className="container">
             <h1 className="jumbotron-heading">Velkommen</h1>
-            <p className="lead text-muted">Vi er i fuld gang med at lave en ny hjemmeside til Yogalates. Kom tilbage om et par dage og check igen.</p>
+            <p className="lead text-muted">Vi er i fuld gang med at lave en ny hjemmeside til Yogalates.</p>
           </div>
         </section>
 
