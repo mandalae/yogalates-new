@@ -1,12 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {Switch, Route, NavLink, useLocation } from 'react-router-dom';
+import {
+  Route,
+  Routes,
+  NavLink, useLocation
+} from "react-router-dom";
 import cognitoUtils from './lib/cognitoUtils';
 import sessionUtils from './lib/session';
 import analytics from './lib/analytics';
 import Dropdown from "react-bootstrap/Dropdown";
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-import { useToasts } from 'react-toast-notifications';
+import toast, { Toaster } from 'react-hot-toast';
 
 import PageService from './services/PageService';
 
@@ -24,8 +28,6 @@ function App() {
   const [showInformation, setShowInformation] = useState(false);
   const [pages, setPages] = useState([]);
   const location = useLocation();
-
-  const { addToast } = useToasts();
 
   useEffect(() => {
     analytics.recordEvent('page load');
@@ -49,7 +51,7 @@ function App() {
   };
 
   const showToast = (type, content) => {
-      addToast(content, {
+      toast(content, {
           appearance: type,
           autoDismiss: true
       });
@@ -65,15 +67,15 @@ function App() {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item href="#/action-1" disabled>
-                <i className="fa fa-envelope mr-2"></i>Email:{" "}
+                <i className="fa fa-envelope me-2" />Email:{" "}
                 {sessionUtils.getEmail()}
               </Dropdown.Item>
               <Dropdown.Item href="/admin/home">
-                <i className="fa fa-edit mr-2"></i>Admin
+                <i className="fa fa-edit me-2" />Admin
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item href="#/action-5" onClick={logout}>
-                <i className="fa fa-sign-out mr-2"></i>Log ud
+                <i className="fa fa-sign-out me-2" />Log ud
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -85,23 +87,23 @@ function App() {
 
   return (
     <>
-
       <header>
+        <Toaster />
         <div className={(showInformation ? 'visible ' : '') + 'show collapse bg-dark'} id="navbarHeader">
           <div className="container">
             <div className="row">
               <div className="col-sm-8 col-md-7 py-4">
                 <h4 className="text-white">Om mig</h4>
                 <div className="d-flex">
-                  <img src="/images/june.png" width="100" />
+                  <img src="/images/june.png" width="100" alt="June Skaaning profile" className="me-2" />
                   <p className="text-muted">Jeg hedder June Skaaning og er fra 1961. Jeg er bosiddende nord for Randers i en lille landsby. I 2006 begyndte jeg mit nye liv, hvor jeg selv ville bestemme over min arbejdstid og det jeg havde lyst til. Det blev og er en dejlig rejse, med mange uddannelser og kurser indenfor bevægelse, se nærmere under uddannelser og kurser.</p>
                 </div>
               </div>
               <div className="col-sm-4 offset-md-1 py-4">
                 <h4 className="text-white">Kontakt</h4>
                 <ul className="list-unstyled">
-                  <li><a href="https://www.facebook.com/groups/1023752511027539/" className="text-white"><i className="fa fa-facebook-square mr-2" />Yoga med June</a></li>
-                  <li><a href="mailto:june@yogalates.dk" className="text-white"><i className="fa fa-envelope mr-2" />Email mig</a></li>
+                  <li><a href="https://www.facebook.com/groups/1023752511027539/" className="text-white"><i className="fa fa-facebook-square me-2" />Yoga med June</a></li>
+                  <li><a href="mailto:june@yogalates.dk" className="text-white"><i className="fa fa-envelope me-2" />Email mig</a></li>
                 </ul>
               </div>
             </div>
@@ -110,7 +112,7 @@ function App() {
         <div className="navbar navbar-dark bg-dark box-shadow">
           <div className="container d-flex justify-content-between">
             <a href="/" className="navbar-brand d-flex align-items-center">
-              <i className="fa fa-yoast mr-2" />
+              <i className="fa fa-yoast me-2" />
               <strong>Yogalates</strong>
             </a>
             <NavDropdown title="Artikler" id="basic-nav-dropdown">
@@ -129,36 +131,20 @@ function App() {
         </div>
       </header>
 
-      <Switch>
-        <Route path="/nyheder">
-          <News />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/ommig">
-          <About />
-        </Route>
-        <Route path="/kurser">
-          <Courses />
-        </Route>
-        <Route path="/hold">
-          <Classes />
-        </Route>
-        <Route path="/artikel/:pageName">
-          <Article />
-        </Route>
-        <Route path="/admin">
-          <AdminHome showToast={showToast} />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path="/nyheder" element={<News />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/ommig" element={<About />} />
+        <Route path="/kurser" element={<Courses />} />
+        <Route path="/hold" element={<Classes />} />
+        <Route path="/artikel/:pageName" element={<Article />} />
+        <Route path="/admin" element={<AdminHome showToast={showToast} />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
 
       <footer className="text-muted mt-4">
         <div className="container">
-          <small>June Skaaning | Kondrupvej 3 | Enslev | 8983 Gjerlev | CVR nr. 20928271 | Tlf: 2673 2571  | Mail: <a href="mailto:june@yogalates.dk" className="text-dark"><i className="fa fa-envelope mr-1" />june@yogalates.dk</a> | Facebook: <a href="https://www.facebook.com/groups/1023752511027539/" className="text-dark"><i className="fa fa-facebook-square mr-1" />Yoga med June</a></small>
+          <small>June Skaaning | Kondrupvej 3 | Enslev | 8983 Gjerlev | CVR nr. 20928271 | Tlf: 2673 2571  | Mail: <a href="mailto:june@yogalates.dk" className="text-dark"><i className="fa fa-envelope me-1" />june@yogalates.dk</a> | Facebook: <a href="https://www.facebook.com/groups/1023752511027539/" className="text-dark"><i className="fa fa-facebook-square me-1" />Yoga med June</a></small>
         </div>
     </footer>
     </>

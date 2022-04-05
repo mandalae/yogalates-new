@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Redirect, Route, Link, useLocation } from "react-router-dom";
+import { Navigate, Route, Link, useLocation } from "react-router-dom";
 import sessionUtils from '../../lib/session';
 import PageService from '../../services/PageService';
 
@@ -34,7 +34,7 @@ function AdminHome({showToast}) {
     };
 
     if (!sessionUtils.isLoggedIn()) {
-        return <Redirect to="/" />;
+        return <Navigate to="/" />;
     } else {
         return (
             <div className="d-flex">

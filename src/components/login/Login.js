@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import cognitoUtils from '../../lib/cognitoUtils';
 import sessionUtils from '../../lib/session';
 
@@ -17,7 +17,7 @@ function Login() {
     }, []);
 
     if (sessionUtils.isLoggedIn()) {
-        return <Redirect to="/" />
+        return <Navigate to="/" />
     }
     return <div/>
 }

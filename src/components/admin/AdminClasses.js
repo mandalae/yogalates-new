@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import sessionUtils from '../../lib/session';
@@ -94,7 +94,7 @@ function AdminClasses({showToast, updatePageList}) {
     };
 
     if (!sessionUtils.isLoggedIn()) {
-        return <Redirect to="/" />;
+        return <Navigate to="/" />;
     } else {
         return (
             <>

@@ -1,22 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import { Redirect, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
+import MDEditor from '@uiw/react-md-editor';
+
 import sessionUtils from '../../lib/session';
 import PageService from '../../services/PageService';
 import ImageService from '../../services/ImageService';
-
-import MarkdownIt from 'markdown-it'
-import MdEditor from 'react-markdown-editor-lite'
-// import style manually
-import 'react-markdown-editor-lite/lib/index.css';
-
-// Plugins for md editor
-import CenterText from 'markdown-it-center-text';
-import MarkdownEditorCenterPlugin from '../../utils/MarkdownEditorCenterPlugin';
-
-MdEditor.use(MarkdownEditorCenterPlugin);
-
-// Initialize a markdown parser
-const mdParser = new MarkdownIt().use(CenterText);
 
 function AdminPages({showToast, updatePageList}) {
     const [name, setName] = useState('');
@@ -67,7 +55,7 @@ function AdminPages({showToast, updatePageList}) {
       };
 
     if (!sessionUtils.isLoggedIn()) {
-        return <Redirect to="/" />;
+        return <Navigate to="/" />;
     } else {
         return (
             <section className="jumbotron">
@@ -80,13 +68,11 @@ function AdminPages({showToast, updatePageList}) {
                         </div>
                         <div className="form-group">
                             <label htmlFor="content">Tekst</label>
-                            <MdEditor
+                            <MDEditor
                               value={content}
-                              style={{ height: "500px" }}
-                              renderHTML={(text) => mdParser.render(text)}
                               onChange={handleEditorChange}
-                              onImageUpload={handleImageUpload}
-                              />
+                            />
+                            <MDEditor.Markdown source={content} />
                         </div>
                         <button type="submit" className="btn btn-primary" onClick={savePage}>Gem</button>
                     </form>
