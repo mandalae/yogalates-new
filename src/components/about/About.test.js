@@ -24,7 +24,7 @@ describe('About', () => {
          });
       });
 
-      expect(getByText('Om mig')).toBeInTheDocument();
-      expect(getByText('Jeg hedder June og sådan')).toBeInTheDocument();
+      expect(getByText('Lidt om mig')).toBeInTheDocument();
+      expect(getByText('June Skaaning - Yoga instruktør.')).toBeInTheDocument();
     });
 });
