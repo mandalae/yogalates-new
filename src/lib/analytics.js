@@ -39,6 +39,8 @@ const recordEvent = (name, attributes) => {
     }
 }
 
-export default {
-    recordEvent
+const analytics = {
+  recordEvent
 };
+
+export default analytics;

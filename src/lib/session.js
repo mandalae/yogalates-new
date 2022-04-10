@@ -31,10 +31,12 @@ const getEmail = () => {
     return getSession().user.email;
 }
 
-export default {
+const session = {
     setSession,
     isLoggedIn,
     getJWTToken,
     getEmail,
     removeSession
-}
+};
+
+export default session;

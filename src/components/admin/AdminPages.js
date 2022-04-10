@@ -4,7 +4,6 @@ import MDEditor from '@uiw/react-md-editor';
 
 import sessionUtils from '../../lib/session';
 import PageService from '../../services/PageService';
-import ImageService from '../../services/ImageService';
 
 function AdminPages({showToast, updatePageList}) {
     const [name, setName] = useState('');
@@ -49,10 +48,10 @@ function AdminPages({showToast, updatePageList}) {
         }
     };
 
-    const handleImageUpload = async file => {
-        await ImageService.uploadImage(file);
-        return Promise.resolve(`https://cdn.yogalates.dk/${file.name}`);
-      };
+    // const handleImageUpload = async file => {
+    //     await ImageService.uploadImage(file);
+    //     return Promise.resolve(`https://cdn.yogalates.dk/${file.name}`);
+    // };
 
     if (!sessionUtils.isLoggedIn()) {
         return <Navigate to="/" />;

@@ -95,7 +95,7 @@ const signOutCognitoSession = () => {
   auth.signOut()
 }
 
-export default {
+const cognitoUtils = {
   createCognitoAuth,
   createCognitoUser,
   createCognitoUserPool,
@@ -104,4 +104,6 @@ export default {
   getCognitoSignUpUri,
   parseCognitoWebResponse,
   signOutCognitoSession
-}
+};
+
+export default cognitoUtils;

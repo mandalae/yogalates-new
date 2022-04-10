@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { Navigate, Route, Link, useLocation, Outlet } from "react-router-dom";
+import { Navigate, Link, useLocation, Outlet } from "react-router-dom";
 import sessionUtils from '../../lib/session';
 import PageService from '../../services/PageService';
 
-import AdminPages from './AdminPages';
-import AdminClasses from './AdminClasses';
-
-function AdminHome({showToast}) {
+function AdminHome() {
     const [pages, setPages] = useState([]);
     const location = useLocation();
 
@@ -16,22 +13,22 @@ function AdminHome({showToast}) {
         });
     }, []);
 
-    const updatePageList = page => {
-        const newPages = [];
-        let found = false;
-        pages.forEach(item => {
-            if (page.name === item.name){
-                found = true;
-                newPages.push(page);
-            } else {
-                newPages.push(item);
-            }
-        });
-        if (!found) {
-            newPages.push(page);
-        }
-        setPages(newPages);
-    };
+    // const updatePageList = page => {
+    //     const newPages = [];
+    //     let found = false;
+    //     pages.forEach(item => {
+    //         if (page.name === item.name){
+    //             found = true;
+    //             newPages.push(page);
+    //         } else {
+    //             newPages.push(item);
+    //         }
+    //     });
+    //     if (!found) {
+    //         newPages.push(page);
+    //     }
+    //     setPages(newPages);
+    // };
 
     if (!sessionUtils.isLoggedIn()) {
         return <Navigate to="/" />;

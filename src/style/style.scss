@@ -58,6 +58,7 @@ a.nav-link {
 
 .home {
   background: url("/images/home-bg-ocean.jpg") 0px -50px fixed no-repeat;
+  background-size: cover;
 
   .home-section {
     height: 600px;
@@ -78,4 +79,11 @@ a.nav-link {
   width: 100px;
   height: 100px;
   background-size: cover;
+}
+
+.home-image {
+  max-width: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #f8f9fa;
 }

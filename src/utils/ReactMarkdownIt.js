@@ -4,7 +4,7 @@ import stripIndent from 'strip-indent'
 
 import CenterText from 'markdown-it-center-text';
 
-export default class extends React.Component {
+const ReactMarkdownIt = class extends React.Component {
 	static defaultProps = {
 		container: 'div',
 		options: {}
@@ -41,4 +41,6 @@ export default class extends React.Component {
 		}
 		return this.md.render(stripIndent(source))
 	}
-}
+};
+
+export default ReactMarkdownIt;

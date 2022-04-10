@@ -21,7 +21,7 @@ function Home() {
             </div>
         </section>
         <div className="row d-flex">
-            <img src={june} alt="" className="w-50 pe-0" />
+            <div className="home-image" style={{backgroundImage: `url(${june})`}} />
             <div className="w-50 bg-light text-center p-4 ps-0 pe-0">
                 <h1>June Skaaning</h1>
                 <div className="w-75 d-inline-block">
