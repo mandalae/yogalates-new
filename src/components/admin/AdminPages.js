@@ -24,7 +24,7 @@ function AdminPages({showToast, updatePageList}) {
     }, [pageName]);
 
     const handleEditorChange = content => {
-        setContent(content.text);
+        setContent(content);
     };
 
     const handlePageHeadlineChange = e => {
@@ -66,13 +66,13 @@ function AdminPages({showToast, updatePageList}) {
                             <label htmlFor="headline">Overskrift</label>
                             <input type="text" value={headline} onChange={handlePageHeadlineChange} className="form-control" id="headline" placeholder="Skriv overskrift" autoFocus />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group mb-3">
                             <label htmlFor="content">Tekst</label>
                             <MDEditor
                               value={content}
                               onChange={handleEditorChange}
+                              height="600"
                             />
-                            <MDEditor.Markdown source={content} />
                         </div>
                         <button type="submit" className="btn btn-primary" onClick={savePage}>Gem</button>
                     </form>

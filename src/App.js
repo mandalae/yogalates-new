@@ -23,9 +23,10 @@ import Article from './components/article/Article';
 import Classes from './components/classes/Classes';
 
 import AdminHome from './components/admin/AdminHome';
+import AdminClasses from "./components/admin/AdminClasses";
+import AdminPages from "./components/admin/AdminPages";
 
 function App() {
-  const [showInformation, setShowInformation] = useState(false);
   const [pages, setPages] = useState([]);
   const location = useLocation();
 
@@ -36,12 +37,6 @@ function App() {
         setPages(pages);
     });
   }, []);
-
-  const toggleInformation = e => {
-    e.preventDefault();
-
-    setShowInformation(!showInformation);
-  };
 
   const logout = () => {
     analytics.recordEvent("logout");
@@ -89,31 +84,11 @@ function App() {
     <>
       <header>
         <Toaster />
-        <div className={(showInformation ? 'visible ' : '') + 'show collapse bg-dark'} id="navbarHeader">
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-8 col-md-7 py-4">
-                <h4 className="text-white">Om mig</h4>
-                <div className="d-flex">
-                  <img src="/images/june.png" width="100" alt="June Skaaning profile" className="me-2" />
-                  <p className="text-muted">Jeg hedder June Skaaning og er fra 1961. Jeg er bosiddende nord for Randers i en lille landsby. I 2006 begyndte jeg mit nye liv, hvor jeg selv ville bestemme over min arbejdstid og det jeg havde lyst til. Det blev og er en dejlig rejse, med mange uddannelser og kurser indenfor bevægelse, se nærmere under uddannelser og kurser.</p>
-                </div>
-              </div>
-              <div className="col-sm-4 offset-md-1 py-4">
-                <h4 className="text-white">Kontakt</h4>
-                <ul className="list-unstyled">
-                  <li><a href="https://www.facebook.com/groups/1023752511027539/" className="text-white"><i className="fa fa-facebook-square me-2" />Yoga med June</a></li>
-                  <li><a href="mailto:june@yogalates.dk" className="text-white"><i className="fa fa-envelope me-2" />Email mig</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className="navbar navbar-dark bg-dark box-shadow">
           <div className="container d-flex justify-content-between">
             <a href="/" className="navbar-brand d-flex align-items-center">
               <i className="fa fa-yoast me-2" />
-              <strong>Yogalates</strong>
+              <strong>Yoga med June</strong>
             </a>
             <NavDropdown title="Artikler" id="basic-nav-dropdown">
               {pages.filter(item => item.type === 'article').map((page, index) => {
@@ -122,10 +97,6 @@ function App() {
             </NavDropdown>
             <NavLink to="/hold" className={'nav-link' + (location.pathname.indexOf('hold') > -1 ? ' active' : '')}>Hold</NavLink>
             <NavLink to="/ommig" className={'nav-link' + (location.pathname.indexOf('ommig') > -1 ? ' active' : '')}>Om mig</NavLink>
-
-            <button className="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" onClick={toggleInformation}>
-              <i className={'fa ' + (showInformation ? 'fa-chevron-up' : 'fa-chevron-down')} />
-            </button>
             {getLoginLogoutButton()}
           </div>
         </div>
@@ -138,7 +109,17 @@ function App() {
         <Route path="/kurser" element={<Courses />} />
         <Route path="/hold" element={<Classes />} />
         <Route path="/artikel/:pageName" element={<Article />} />
-        <Route path="/admin" element={<AdminHome showToast={showToast} />} />
+        <Route path="/admin" element={<AdminHome showToast={showToast} />}>
+          <Route path="home" element={<section className="jumbotron">
+            <div className="container">
+              <h1 className="jumbotron-heading">Admin</h1>
+              <p className="lead text-muted">Her kan du rette tekster og tilføje ting</p>
+            </div>
+          </section>} />
+          <Route path="classes" element={<AdminClasses showToast={showToast} />} />
+          <Route path="pages/create" element={<AdminPages showToast={showToast} updatePageList={() => {}} />} />
+          <Route path="pages/edit/:pageName" element={<AdminPages showToast={showToast} updatePageList={() => {}} />} />
+        </Route>
         <Route path="/" element={<Home />} />
       </Routes>
 

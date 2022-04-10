@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Navigate, Route, Link, useLocation } from "react-router-dom";
+import { Navigate, Route, Link, useLocation, Outlet } from "react-router-dom";
 import sessionUtils from '../../lib/session';
 import PageService from '../../services/PageService';
 
@@ -59,23 +59,7 @@ function AdminHome({showToast}) {
                     </ul>
                 </nav>
                 <main className="admin-home w-75">
-                    <Route path="/admin/home">
-                        <section className="jumbotron">
-                            <div className="container">
-                                <h1 className="jumbotron-heading">Admin</h1>
-                                <p className="lead text-muted">Her kan du rette tekster og tilføje ting</p>
-                            </div>
-                        </section>
-                    </Route>
-                    <Route path="/admin/classes">
-                        <AdminClasses showToast={showToast} />
-                    </Route>
-                    <Route path="/admin/pages/create">
-                        <AdminPages showToast={showToast} updatePageList={updatePageList} />
-                    </Route>
-                    <Route path="/admin/pages/edit/:pageName">
-                        <AdminPages showToast={showToast} updatePageList={updatePageList} />
-                    </Route>
+                    <Outlet />
                 </main>
             </div>
         );

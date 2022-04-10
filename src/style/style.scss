@@ -55,3 +55,27 @@ a.nav-link {
 .text-align-center {
     text-align: center;
 }
+
+.home {
+  background: url("/images/home-bg-ocean.jpg") 0px -50px fixed no-repeat;
+
+  .home-section {
+    height: 600px;
+  }
+
+  .main-headline {
+    top: 25%;
+    left: 20%;
+  }
+}
+
+.weekday-headline {
+  background-color: #4580A4;
+  color: #fff;
+}
+
+.class-image {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+}

@@ -27,7 +27,7 @@ function About() {
           <div className="about-picture col-4">&nbsp;</div>
           <div className="col-8 p-4 ml-4 bg-light rounded">
             <h2>{headline}</h2>
-            <Markdown source={content} />
+            <Markdown children={content} />
           </div>
       </section>
     </main>

@@ -7,6 +7,12 @@ const ClassService = {
             .then(result => result)
             .catch(console.log);
     },
+    getOwnClasses: () => {
+      return fetch(`https://api.yogalates.dk/classes`)
+        .then((res) => res.json())
+        .then(result => result)
+        .catch(console.log);
+    },
     deleteClass: (slug) => {
         return fetch(`https://api.yogalates.dk/classes/${slug}`,
             {

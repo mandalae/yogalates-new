@@ -8,5 +8,5 @@
     "tokenScopes": ["openid", "email", "profile", "https://yogalates.dk/yogalates.admin"],
     "appId": "6afc97da21ca4efd926ef000904ae0fe",
     "identityPoolId": "eu-west-1:a0fb02c6-2cc7-45a9-a9b1-9afe90a6b1d4"
-  }
+}
   
