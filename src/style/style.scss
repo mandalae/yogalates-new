@@ -1,4 +1,12 @@
+$primary: #4580A4;
+
 @import "~bootstrap/scss/bootstrap";
+
+.btn-outline-primary:hover,
+.btn-primary,
+.btn-primary:hover{
+  color: #fff;
+}
 
 body {
     margin: 0;
