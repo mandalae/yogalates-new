@@ -70,7 +70,7 @@ function AdminClasses({showToast, updatePageList}) {
         e.preventDefault();
 
         if (!currentClass.slug) {
-            currentClass.slug = encodeURIComponent((currentClass.name + ' ' + currentClass.address1).toLowerCase().replace(/\s/gi, '-'));
+            currentClass.slug = encodeURIComponent((currentClass.name + '-' + currentClass.address1 + '-' + currentClass.time).toLowerCase().replace(/\s/gi, '-'));
         }
         
         setSaving(true);
