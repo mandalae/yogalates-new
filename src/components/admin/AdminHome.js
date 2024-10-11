@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import { Navigate, Link, useLocation, Outlet } from "react-router-dom";
-import sessionUtils from '../../lib/session';
+import { Link, useLocation, Outlet } from "react-router-dom";
 import PageService from '../../services/PageService';
+import { Authenticator } from '@aws-amplify/ui-react';
+import { Amplify } from 'aws-amplify';
+import outputs from '../../config/amplify-config.json';
+
+import '@aws-amplify/ui-react/styles.css';
+
+Amplify.configure(outputs);
 
 function AdminHome() {
     const [pages, setPages] = useState([]);
@@ -30,10 +36,8 @@ function AdminHome() {
     //     setPages(newPages);
     // };
 
-    if (!sessionUtils.isLoggedIn()) {
-        return <Navigate to="/" />;
-    } else {
-        return (
+    return (
+        <Authenticator>
             <div className="d-flex">
                 <nav id="sidebar" className="w-25 p-4">
                     <ul className="list-group">
@@ -59,8 +63,8 @@ function AdminHome() {
                     <Outlet />
                 </main>
             </div>
-        );
-    }
+        </Authenticator>
+    );
 }
 
 export default AdminHome;

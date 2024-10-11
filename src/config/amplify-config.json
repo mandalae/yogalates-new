@@ -1,0 +1,35 @@
+{
+    "Auth": {
+        "region": "eu-west-1",
+        "userPoolId": "eu-west-1_JdyIGeWX3",
+        "userPoolWebClientId": "4rkqdq3nprv71cnmbsgh35dubn",
+        "signUpVerificationMethod": "code", 
+
+        "cookieStorage": {
+            "domain": ".yogalates.dk",
+            "path": "/",
+            "expires": 365,
+            "sameSite": "strict",  
+            "secure": true
+        },
+
+        "authenticationFlowType": "USER_PASSWORD_AUTH",
+        
+        "clientMetadata": {  },
+
+        "Cognito": {
+            "userPoolClientId": "4rkqdq3nprv71cnmbsgh35dubn",
+            "userPoolId": "eu-west-1_JdyIGeWX3",
+            "loginWith": { 
+              "oauth": {
+                "domain": "yogalates.auth.eu-west-1.amazoncognito.com",
+                "scope": [ "openid", "email", "profile", "https://yogalates.dk/yogalates.admin" ],
+                "redirectSignIn": "https://yogalates.dk/login",
+                "redirectSignOut": "https://yogalates.dk/logout",
+                "responseType": "code"
+              },
+              "username": "true"
+            }
+          }
+    }
+}

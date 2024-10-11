@@ -13,7 +13,7 @@ function ClassList({classes}) {
           {classes.filter(classObject => {
             return classObject.time.toLowerCase().indexOf(day.toLowerCase()) > -1;
           }).map((classObject, index) => {
-            return (<div className="d-flex mb-2">
+            return (<div className="d-flex mb-2" key={index}>
               <div className="class-image" style={{backgroundImage: `url(${classObject.imageUrl})`}} />
               <div className="class p-2 w-50" key={`class-${index}`}>
                 <h5>{classObject.name}</h5>
@@ -22,9 +22,9 @@ function ClassList({classes}) {
               </div>
               <div className="class-address p-2 w-25">
                 <p className="mb-1">Adresse:</p>
-                <p class="small mb-0">{classObject.address1}</p>
-                <p class="small mb-0">{classObject.address2}</p>
-                <p class="small mb-0">{classObject.city}</p>
+                <p className="small mb-0">{classObject.address1}</p>
+                <p className="small mb-0">{classObject.address2}</p>
+                <p className="small mb-0">{classObject.city}</p>
               </div>
               <div className="class-actions ms-auto me-4 d-flex flex-column">
                 <a href={`mailto:june@yogalates.dk?subject=Tilmelding til ${classObject.name} - ${classObject.time}`} className="btn btn-sm btn-primary">Tilmeld hold</a>

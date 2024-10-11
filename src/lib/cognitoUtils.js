@@ -1,4 +1,4 @@
-import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
+import { CognitoAuth } from '@aws-amplify/auth';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 import { config as AWSConfig } from 'aws-sdk';
 import appConfig from '../config/app-config.json';

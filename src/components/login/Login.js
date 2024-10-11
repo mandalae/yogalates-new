@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import cognitoUtils from '../../lib/cognitoUtils';
+//import cognitoUtils from '../../lib/cognitoUtils';
 import sessionUtils from '../../lib/session';
 
 function Login() {
-    useEffect(() => {
+    /*useEffect(() => {
         cognitoUtils.parseCognitoWebResponse(window.location.href) // parse the callback URL
         .then(() => cognitoUtils.getCognitoSession()) // get a new session
         .then((session) => {
@@ -14,7 +14,7 @@ function Login() {
           console.log(err);
           window.location = cognitoUtils.getCognitoSignInUri();
       });
-    }, []);
+    }, []);*/
 
     if (sessionUtils.isLoggedIn()) {
         return <Navigate to="/" />

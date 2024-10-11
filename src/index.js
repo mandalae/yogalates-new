@@ -1,16 +1,22 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import {BrowserRouter as Router} from 'react-router-dom';
-
 import './style/style.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+import { Authenticator, View } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
 const container = document.getElementById('root')
 const root = createRoot(container);
 root.render(<React.StrictMode>
               <Router>
-                <App tab="home" />
+                <Authenticator.Provider>
+                  <View>
+                    <App tab="home" />
+                  </View>
+                </Authenticator.Provider>
               </Router>
             </React.StrictMode>);
 

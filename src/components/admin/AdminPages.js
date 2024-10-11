@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MDEditor from '@uiw/react-md-editor';
-
-import sessionUtils from '../../lib/session';
 import PageService from '../../services/PageService';
 
 function AdminPages({showToast, updatePageList}) {
@@ -53,32 +51,28 @@ function AdminPages({showToast, updatePageList}) {
     //     return Promise.resolve(`https://cdn.yogalates.dk/${file.name}`);
     // };
 
-    if (!sessionUtils.isLoggedIn()) {
-        return <Navigate to="/" />;
-    } else {
-        return (
-            <section className="jumbotron">
-                <div className="container">
-                    <h1 className="jumbotron-heading">{headline ? 'Retter side: ' + headline : 'Opret ny side'}</h1>
-                    <form onSubmit={savePage}>
-                        <div className="form-group">
-                            <label htmlFor="headline">Overskrift</label>
-                            <input type="text" value={headline} onChange={handlePageHeadlineChange} className="form-control" id="headline" placeholder="Skriv overskrift" autoFocus />
-                        </div>
-                        <div className="form-group mb-3">
-                            <label htmlFor="content">Tekst</label>
-                            <MDEditor
-                              value={content}
-                              onChange={handleEditorChange}
-                              height="600"
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-primary" onClick={savePage}>Gem</button>
-                    </form>
-                </div>
-            </section>
-        );
-    }
+    return (
+        <section className="jumbotron">
+            <div className="container">
+                <h1 className="jumbotron-heading">{headline ? 'Retter side: ' + headline : 'Opret ny side'}</h1>
+                <form onSubmit={savePage}>
+                    <div className="form-group">
+                        <label htmlFor="headline">Overskrift</label>
+                        <input type="text" value={headline} onChange={handlePageHeadlineChange} className="form-control" id="headline" placeholder="Skriv overskrift" autoFocus />
+                    </div>
+                    <div className="form-group mb-3">
+                        <label htmlFor="content">Tekst</label>
+                        <MDEditor
+                            value={content}
+                            onChange={handleEditorChange}
+                            height="600"
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary" onClick={savePage}>Gem</button>
+                </form>
+            </div>
+        </section>
+    );
 }
 
 export default AdminPages;
