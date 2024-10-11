@@ -1,6 +1,6 @@
 'use strict';
 
-const babelJest = require('babel-jest').default;
+import {babelJest} from 'babel-jest';
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
